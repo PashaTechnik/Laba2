@@ -41,15 +41,6 @@ void Score(string s, int score[20][20], string name)
             }
         }
     }
-    
-    for (int i = 0; i < 20; i++)
-    {
-        for (int j = 0; j < 20; j++)
-        {
-            cout << score[j][i] << "\t";
-        }
-        cout << endl;
-    }
     afile.close();
 }void Points(int points[20], int score[20][20])
 {
