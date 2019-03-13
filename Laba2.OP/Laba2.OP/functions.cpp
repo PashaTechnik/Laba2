@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 using namespace std;
+
+
 void Commands(string s, string commands[], string name)
 {
     ifstream file;
@@ -18,4 +20,37 @@ void Commands(string s, string commands[], string name)
     }
     file.close();
 }
+
+void Score(string s, int score[20][20], string name)
+{
+    ifstream afile(name);
+    string N;
+    for (int k = 0; k < 20; k++)
+    {
+        getline(afile, s);
+        size_t a = s.length();
+        int i = 0;
+        
+        for (int j = 0; j < a; j++)
+        {
+            if (isdigit(s[j]))
+            {
+                N = s[j];
+                score[i][k] = stoi(N);
+                i++;
+            }
+        }
+    }
+    
+    for (int i = 0; i < 20; i++)
+    {
+        for (int j = 0; j < 20; j++)
+        {
+            cout << score[j][i] << "\t";
+        }
+        cout << endl;
+    }
+    afile.close();
+}
+
 
