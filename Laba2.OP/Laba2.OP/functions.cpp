@@ -56,7 +56,7 @@ void Score(string s, int score[20][20], string name)
     for (int i = 0; i < 20; i++)
     {
         points[i] = 0;
-        for (int j = 0; j < 18; j = j + 2)
+        for (int j = 0; j < 20; j = j + 2)
         {
             if (score[j][i] > score[j + 1][i])
             {
