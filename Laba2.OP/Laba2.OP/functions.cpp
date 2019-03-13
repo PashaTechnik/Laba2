@@ -51,6 +51,31 @@ void Score(string s, int score[20][20], string name)
         cout << endl;
     }
     afile.close();
+}void Points(int points[20], int score[20][20])
+{
+    for (int i = 0; i < 20; i++)
+    {
+        points[i] = 0;
+        for (int j = 0; j < 18; j = j + 2)
+        {
+            if (score[j][i] > score[j + 1][i])
+            {
+                points[i] = points[i] + 3;
+            }
+            
+            
+            else if (score[j][i] == score[j + 1][i])
+            {
+                points[i] = points[i] + 1;
+            }
+            
+            else
+            {
+                points[i] = points[i] + 0;
+            }
+        }
+    }
 }
+
 
 
