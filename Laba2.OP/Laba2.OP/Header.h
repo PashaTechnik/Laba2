@@ -5,7 +5,11 @@
 #include <sstream>
 #include <string>
 using namespace std;
-void Commands(string s, string commands[], string name);
-void Score(string s, int score[20][20], string name);
-void Points(int points[], int score[20][20]);
+
+void Comands(string s, string *comands, string name,int num);
+void Score(string s, int **score, string name,int num);
+void Points(int *points, int **score,int num);
+void Counter(string s,string name,int &num);
+void SortComands(int *points,string *comands,int num,int *games);
+void GamesCounter(int num,int **score,int *games);
 #endif

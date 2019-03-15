@@ -3,29 +3,34 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-using namespace std;
-
-
-void Commands(string s, string commands[], string name)
+void Counter(string s,string name,int &num)
+{
+    ifstream file;
+    file.open(name);
+    while(!file.eof()){
+        getline(file, s);
+        num++;
+    }
+}
+void Comands(string s, string *comands, string name,int num)
 {
     ifstream file;
     file.open(name);
     
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < num; i++)
     {
         size_t a;
         getline(file, s);
         a = s.find(",");
-        commands[i] = s.substr(0, a);
+        comands[i] = s.substr(0, a);
     }
     file.close();
 }
-
-void Score(string s, int score[20][20], string name)
+void Score(string s, int **score, string name,int num)
 {
     ifstream afile(name);
     string N;
-    for (int k = 0; k < 20; k++)
+    for (int k = 0; k < num; k++)
     {
         getline(afile, s);
         size_t a = s.length();
@@ -33,21 +38,45 @@ void Score(string s, int score[20][20], string name)
         
         for (int j = 0; j < a; j++)
         {
-            if (isdigit(s[j]))
+            if (isdigit(s[j])||s[j]=='x')//если игра не сыграна, вместо счета стоит x, а в массиве ставим отрицательные значения
             {
                 N = s[j];
+                if(N=="x"){
+                score[i][k]=-1;
+                score[i+1][k]=-1;
+                i+=2;
+                }
+                else{
                 score[i][k] = stoi(N);
                 i++;
+                }
             }
         }
     }
     afile.close();
-}void Points(int points[20], int score[20][20])
+}
+void SortComands(int *points,string *comands,int num,int *games){
+        for (int i = 0; i < num; i++){
+            if(points[i]<points[i+1]){
+                swap(points[i],points[i+1]);
+                swap(comands[i],comands[i+1]);
+                swap(games[i],games[i+1]);
+            }
+        }
+    for(int i=0;i<num;i++){
+        if(points[i]==points[i+1]&&games[i]>games[i+1]){//если у команд одинаковое количество очков, но одна сыграла меньше игр
+            swap(points[i],points[i+1]);
+            swap(comands[i],comands[i+1]);
+            swap(games[i],games[i+1]);
+        }
+    }
+}
+void Points(int *points, int **score,int num)
 {
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < num; i++)
     {
         points[i] = 0;
-        for (int j = 0; j < 20; j = j + 2)
+        for (int j = 0; j < num; j = j + 2)
         {
             if (score[j][i] > score[j + 1][i])
             {
@@ -67,6 +96,16 @@ void Score(string s, int score[20][20], string name)
         }
     }
 }
-
-
-
+void GamesCounter(int num,int **score,int *games){
+    for (int i = 0; i < num; i++){
+        games[i]=0;
+    }
+    for (int i = 0; i < num; i++){
+        for (int j = 0; j < num; j++){
+            if(score[j][i]>=0){
+                games[i]++;
+            }
+        }
+                games[i]=games[i]/2;
+    }
+}
